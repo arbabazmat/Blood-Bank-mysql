@@ -1,0 +1,175 @@
+create database blood
+use blood
+CREATE TABLE Blood_Bank(
+    Phone_no int,
+    Location varchar(30),
+    b_number int,
+    PRIMARY KEY(b_number));
+
+
+CREATE TABLE Blood(
+    Cost int,
+    Typ varchar (5),
+    Code int,
+    PRIMARY KEY(Code));
+	alter table Blood ADD   typ varchar (5);
+
+	INSERT INTO Blood(Cost,Typ, Code) VALUES (1500,'A', 20);
+INSERT INTO Blood(Cost,Typ, Code) VALUES (1600, 'B+', 30);
+INSERT INTO Blood(Cost,Typ, Code) VALUES (1700, 'A-', 40);
+INSERT INTO Blood(Cost,Typ, Code) VALUES (1800, 'B-', 50);
+INSERT INTO Blood(Cost,Typ, Code) VALUES (1900, 'AB+', 60);
+INSERT INTO Blood(Cost,Typ, Code) VALUES (3000, 'O+', 70);
+
+
+CREATE TABLE Receptionist(
+    R_id int,
+    Name varchar (10),
+    Phone_no int,
+    b_number int,
+    PRIMARY KEY(R_id),
+    FOREIGN KEY(b_number) REFERENCES blood_bank(b_number));
+CREATE TABLE Donor(
+    D_id int,
+    Name varchar (10),
+    Address varchar (20),
+    Gender varchar (3),
+    PRIMARY KEY(D_id),
+    Code int,
+    R_id int,
+    FOREIGN KEY(Code) REFERENCES blood(Code),
+    FOREIGN KEY(R_id) REFERENCES Receptionist(R_id));
+CREATE TABLE Orders(
+    O_id int,
+    Quantity int,
+    no_of_orders int,
+    PRIMARY KEY(O_id));
+CREATE TABLE Hospital(
+    h_id int,
+    Name varchar (10),
+    Phone_no int,
+    Address varchar (20),
+    PRIMARY KEY(h_id));
+CREATE TABLE Patient(
+    P_id int,
+    Name varchar (10),
+    Phone_no int,
+    h_id int,
+    PRIMARY KEY(h_id),
+    FOREIGN KEY(h_id) REFERENCES hospital(h_id));
+CREATE TABLE Stock(
+    S_id int,
+    Amount_of_blood int,    
+    PRIMARY KEY(S_id));
+CREATE TABLE Bank_Blood(
+    b_number int,
+    code int,
+    FOREIGN KEY(b_number) REFERENCES blood_bank(b_number),
+    FOREIGN KEY(code) REFERENCES blood(code));
+CREATE TABLE hospital_order(
+    h_id int,
+    O_id int,
+    FOREIGN KEY(h_id) REFERENCES hospital(h_id),
+    FOREIGN KEY(O_id) REFERENCES orders(O_id));
+CREATE TABLE Order_blood(
+    code int,
+    O_id int,
+    FOREIGN KEY(code) REFERENCES blood(code),
+    FOREIGN KEY(O_id) REFERENCES Orders(O_id));
+CREATE TABLE blood_stock(
+    code int,
+    S_id int,
+    FOREIGN KEY(code) REFERENCES blood(code),
+    FOREIGN KEY(S_id) REFERENCES stock(S_id));
+
+
+
+
+	
+INSERT INTO Blood(Cost,Type, Code) VALUES (1500, "A+", 20);
+INSERT INTO Blood(Cost,Type, Code) VALUES (1600, "B+", 30);
+INSERT INTO Blood(Cost,Type, Code) VALUES (1700, "A-", 40);
+INSERT INTO Blood(Cost,Type, Code) VALUES (1800, "B-", 50);
+INSERT INTO Blood(Cost,Type, Code) VALUES (1900, "AB+", 60);
+INSERT INTO Blood(Cost,Type, Code) VALUES (3000, "O+", 70);
+INSERT INTO blood_bank(phone_no, Location,b_number) VALUES (090078601,'Gujranwala', 1);
+INSERT INTO blood_bank(phone_no, Location,b_number) VALUES (090078602,'Lahore', 2);
+INSERT INTO blood_bank(phone_no, Location,b_number) VALUES (090078603,'Sheikhupura', 3);
+INSERT INTO blood_bank(phone_no, Location,b_number) VALUES (090078604,'Faisalabad', 4);
+INSERT INTO blood_bank(phone_no, Location,b_number) VALUES (090078605,'Karachi', 5);
+INSERT INTO blood_bank(phone_no, Location,b_number) VALUES (090078606,'Islamabad', 6);
+INSERT INTO Stock(S_id, Amount_of_blood) VALUES (20,110);
+INSERT INTO Stock(S_id, Amount_of_blood) VALUES (30,120);
+INSERT INTO Stock(S_id, Amount_of_blood) VALUES (40,130);
+INSERT INTO Stock(S_id, Amount_of_blood) VALUES (50,140);
+INSERT INTO Stock(S_id, Amount_of_blood) VALUES (60,150);
+INSERT INTO Stock(S_id, Amount_of_blood) VALUES (70,160);
+INSERT INTO blood_stock(code,S_id) VALUES (20,20);
+INSERT INTO blood_stock(code,S_id) VALUES (30,30);
+INSERT INTO blood_stock(code,S_id) VALUES (40,40);
+INSERT INTO blood_stock(code,S_id) VALUES (50,50);
+INSERT INTO blood_stock(code,S_id) VALUES (60,60);
+INSERT INTO blood_stock(code,S_id) VALUES (70,70);
+INSERT INTO receptionist(b_number, Name,Phone_no,R_id) VALUES (1,'Ahmed',0000045678,01);
+INSERT INTO receptionist(b_number, Name,Phone_no,R_id) VALUES (2,'Ali',0000045677,02);
+INSERT INTO receptionist(b_number, Name,Phone_no,R_id) VALUES (3,'Butt',0000045676,03);
+INSERT INTO receptionist(b_number, Name,Phone_no,R_id) VALUES (4,'Sammar',0000045675,04);
+INSERT INTO receptionist(b_number, Name,Phone_no,R_id) VALUES (5,'Numan',0000045674,05);
+INSERT INTO receptionist(b_number, Name,Phone_no,R_id) VALUES (6,'Mughees',00000345673,06);
+
+INSERT INTO Donor(d_id, Name,Address,Gender,Code,r_id) VALUES (1,'Ali','Lahore','M',20,01);
+INSERT INTO Donor(d_id, Name,Address,Gender,Code,r_id) VALUES (2,'Ahmed','Gujranwala','M',30,02);
+INSERT INTO Donor(d_id, Name,Address,Gender,Code,r_id) VALUES (3,'Sammar','Faisalabad','M',40,03);
+INSERT INTO Donor(d_id, Name,Address,Gender,Code,r_id) VALUES (4,'Muzzamil','Karachi','M',50,04);
+INSERT INTO Donor(d_id, Name,Address,Gender,Code,r_id) VALUES (5,'Bilal','Rawalpindi','M',60,05);
+INSERT INTO Donor(d_id, Name,Address,Gender,Code,r_id) VALUES (6,'Saqib','Islamabad','M',70,06);
+INSERT INTO hospital(h_id, Name,Address,Phone_no) VALUES (11,'Ali','DHA', 0000232900);
+INSERT INTO hospital(h_id, Name,Address,Phone_no) VALUES (12,'Ali','LHR', 0000212901);
+INSERT INTO hospital(h_id, Name,Address,Phone_no) VALUES (13,'Ali','GRW', 0000023202);
+INSERT INTO hospital(h_id, Name,Address,Phone_no) VALUES (14,'Ali','ISL', 0000328903);
+INSERT INTO hospital(h_id, Name,Address,Phone_no) VALUES (15,'Ali','CCH', 0000345904);
+INSERT INTO hospital(h_id, Name,Address,Phone_no) VALUES (16,'Ali','PMH', 0000218905);
+INSERT INTO Orders(O_id, no_of_orders,Quantity) VALUES (1,20,100);
+INSERT INTO Orders(O_id, no_of_orders,Quantity) VALUES (2,30,100);
+INSERT INTO Orders(O_id, no_of_orders,Quantity) VALUES (3,40,100);
+INSERT INTO Orders(O_id, no_of_orders,Quantity) VALUES (4,50,100);
+INSERT INTO Orders(O_id, no_of_orders,Quantity) VALUES (5,60,100);
+INSERT INTO Orders(O_id, no_of_orders,Quantity) VALUES (6,70,100);
+INSERT INTO hospital_order(h_id,O_id) VALUES (11,1);
+INSERT INTO hospital_order(h_id,O_id) VALUES (12,2);
+INSERT INTO hospital_order(h_id,O_id) VALUES (13,3);
+INSERT INTO hospital_order(h_id,O_id) VALUES (14,4);
+INSERT INTO hospital_order(h_id,O_id) VALUES (15,5);
+INSERT INTO hospital_order(h_id,O_id) VALUES (16,6);
+
+INSERT INTO order_blood(O_id,code) VALUES (1,20);
+INSERT INTO order_blood(O_id,code) VALUES (2,30);
+INSERT INTO order_blood(O_id,code) VALUES (3,40);
+INSERT INTO order_blood(O_id,code) VALUES (4,50);
+INSERT INTO order_blood(O_id,code) VALUES (5,60);
+INSERT INTO order_blood(O_id,code) VALUES (6,70);
+INSERT INTO Patient(P_id, Name,Phone_no,h_id) VALUES (15,'Ali',000000000,11);
+INSERT INTO Patient(P_id, Name,Phone_no,h_id) VALUES (16,'Ahmed',0000234569,12);
+INSERT INTO Patient(P_id, Name,Phone_no,h_id) VALUES (17,'Bilal',0000398765,13);
+INSERT INTO Patient(P_id, Name,Phone_no,h_id) VALUES (18,'adeel',0000234567,14);
+INSERT INTO Patient(P_id, Name,Phone_no,h_id) VALUES (19,'sarab',00002334455,15);
+INSERT INTO Patient(P_id, Name,Phone_no,h_id) VALUES (20,'Saqib',00001212323,16);
+
+INSERT INTO Bank_blood(b_number,code) VALUES (1,20);
+INSERT INTO Bank_blood(b_number,code) VALUES (2,30);
+INSERT INTO Bank_blood(b_number,code) VALUES (3,40);
+INSERT INTO Bank_blood(b_number,code) VALUES (4,50);
+INSERT INTO Bank_blood(b_number,code) VALUES (5,60);
+INSERT INTO Bank_blood(b_number,code) VALUES (6,70);
+select * from blood_stock
+select * from blood_bank
+select * from Donor
+select * from Hospital
+select * from hospital_order
+select * from Order_blood
+select * from Orders
+select * from Patient
+select * from receptionist 
+select * from stock
+select * from Bank_Blood
+
